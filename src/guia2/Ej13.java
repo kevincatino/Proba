@@ -1,6 +1,8 @@
 package guia2;
 
 import tools.Mathz;
+import tools.ProbCalc;
+import tools.VAD;
 
 
 public class Ej13 {
@@ -8,11 +10,11 @@ public class Ej13 {
     private static int ERRORS=5;
     private static int CHOSEN=10;
     public static void main(String[] args) {
-        for (int i=0 ; i<=ERRORS ; i++) {
-            System.out.println(String.format("%s: %.4f",i, px(i)));
-        }
-    }
-    public static double px (int x) {
-        return (Mathz.choose(TOTAL - ERRORS, CHOSEN - x)* Mathz.choose(ERRORS, x))/(double)Mathz.choose(TOTAL, CHOSEN) ;
+        ProbCalc p = (x) -> {
+            return (Mathz.choose(TOTAL - ERRORS, CHOSEN - x)* Mathz.choose(ERRORS, x))/(double)Mathz.choose(TOTAL, CHOSEN) ;
+        };
+        VAD vad = new VAD(0,5,p);
+        System.out.println(vad);
+
     }
 }

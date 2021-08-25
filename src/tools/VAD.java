@@ -58,12 +58,12 @@ public class VAD {
     public String toString() {
         StringBuilder s = new StringBuilder();
         for (int i=0 ; i<prob.length ; i++) {
-            s.append(String.format("%s: %.4f\n", range[i], prob[i]));
+            s.append(String.format("%s: %.4f  (%s)\n", range[i], prob[i], new Fraction(prob[i])));
         }
         s.append("--------------------------\n");
-        s.append(String.format("E: %.4f\n", ev));
-        s.append(String.format("V: %.4f\n", var));
-        s.append(String.format("DE: %.4f\n", std));
+        s.append(String.format("E: %.4f  (%s)\n", ev, new Fraction(ev)));
+        s.append(String.format("V: %.4f  (%s)\n", var, new Fraction(var)));
+        s.append(String.format("DE: %.4f  (%s)\n", std, new Fraction(std)));
         return s.toString();
     }
     public double ev() {
