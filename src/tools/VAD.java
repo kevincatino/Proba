@@ -57,9 +57,12 @@ public class VAD {
     }
     public String toString() {
         StringBuilder s = new StringBuilder();
+        double accum=0;
         for (int i=0 ; i<prob.length ; i++) {
             s.append(String.format("%s: %.4f  (%s)\n", range[i], prob[i], new Fraction(prob[i])));
+            accum+=prob[i];
         }
+        s.append(String.format("TOTAL = %.4f\n", accum));
         s.append("--------------------------\n");
         s.append(String.format("E: %.4f  (%s)\n", ev, new Fraction(ev)));
         s.append(String.format("V: %.4f  (%s)\n", var, new Fraction(var)));
