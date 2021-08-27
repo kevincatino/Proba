@@ -2,7 +2,7 @@ package guia2;
 
 import tools.Mathz;
 import tools.ProbCalc;
-import tools.VAD;
+import tools.VADDef;
 
 
 public class Ej13 {
@@ -13,7 +13,7 @@ public class Ej13 {
         ProbCalc p = (x) -> {
             return (Mathz.choose(TOTAL - ERRORS, CHOSEN - x)* Mathz.choose(ERRORS, x))/(double)Mathz.choose(TOTAL, CHOSEN) ;
         };
-        VAD vad = new VAD(0,5,p);
+        VADDef vad = new VADDef(0,5,p);
         System.out.println(vad);
 
     }
