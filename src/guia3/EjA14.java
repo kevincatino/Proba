@@ -1,11 +1,12 @@
 package guia3;
 
+import tools.Select;
 import tools.VADF;
-import tools.VADTemp;
 
 public class EjA14 {
     public static void main(String[] args) {
-    VADF vad = new VADF(VADTemp.binomial(100,0.3));
+    VADF vad = new VADF(VADF.geoII(0.5));
+        System.out.println(vad.prob(Select.LEQ, 4));
         System.out.println(vad);
 
     }

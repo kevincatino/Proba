@@ -92,7 +92,7 @@ public class VADDef extends VADC{
 
 
     @Override
-    public double prob(int value, Select s) {
+    public double prob(Select s, int value) {
         for (int i=0 ; i<range.length ; i++){
             if (range[i]==value)
                 return prob[i];

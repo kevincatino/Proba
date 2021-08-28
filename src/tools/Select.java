@@ -12,25 +12,25 @@ public enum Select {
     GEQ {
         @Override
         public double apply(AbstractIntegerDistribution d, int value) {
-            return 1 - d.cumulativeProbability(d.getSupportLowerBound(), value-1);
+            return 1 - d.cumulativeProbability(value-1);
         }
     },
     LEQ {
         @Override
         public double apply(AbstractIntegerDistribution d, int value) {
-            return d.cumulativeProbability(d.getSupportLowerBound(), value-1);
+            return d.cumulativeProbability(value);
         }
     },
-    GR {
+    GRE {
         @Override
         public double apply(AbstractIntegerDistribution d, int value) {
-            return 1 - d.cumulativeProbability(d.getSupportLowerBound(), value);
+            return 1 - d.cumulativeProbability(value);
         }
     },
-    LE {
+    LES {
         @Override
         public double apply(AbstractIntegerDistribution d, int value) {
-            return d.cumulativeProbability(d.getSupportLowerBound(), value);
+            return d.cumulativeProbability(value-1);
         }
     };
     abstract public double apply(AbstractIntegerDistribution d, int value);
