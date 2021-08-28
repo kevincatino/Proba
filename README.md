@@ -15,7 +15,7 @@ VADF vad = new VADF(VADF.binomial(10,0.2))
 Ambas clases anteriores extienden de `VADC`, por lo cual tienen métodos de instancia para consultar el valor esperado, variación y desvío estándar y un método `prob(Select s, int value)` que permite calcular la probabilidad acumulada según el valor del enum `Select` que se le pase:
 ```
 VADF vad = new VADF(VADF.geo(0.5));
-vad.prob(Select.LEQ, 4) \\ devuelve la probabilidad de que la variable tome un valor menor o igual a 4
-vad.prob(Select.LES, 4) \\ devuelve la probabilidad de que la variable tome un valor menor a 4
-vad.prob(Select.EQ, 4) \\ devuelve la probabilidad de que la variable tome un valor igual a 4
+vad.prob(Select.LEQ, 4) // devuelve la probabilidad de que la variable tome un valor menor o igual a 4
+vad.prob(Select.LES, 4) // devuelve la probabilidad de que la variable tome un valor menor a 4
+vad.prob(Select.EQ, 4) // devuelve la probabilidad de que la variable tome un valor igual a 4
 ```
