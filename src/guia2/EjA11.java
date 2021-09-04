@@ -1,14 +1,12 @@
 package guia2;
 
-import tools.ProbCalc;
-import tools.VADDef;
+import tools.va.vad.DefinedVAD;
+import tools.va.util.ProbCalcInt;
 
 public class EjA11 {
     public static void main(String[] args) {
-        ProbCalc p = (n)-> {
-            return Math.pow(5.0/6,n-1)*(1/6.0);
-        };
-        VADDef vad = new VADDef(1,100, p);
+        ProbCalcInt p = (n)-> Math.pow(5.0/6,n-1)*(1/6.0);
+        DefinedVAD vad = new DefinedVAD(1,100, p);
         System.out.println(vad);
     }
 }

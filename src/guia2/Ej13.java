@@ -1,8 +1,8 @@
 package guia2;
 
-import tools.Mathz;
-import tools.ProbCalc;
-import tools.VADDef;
+import tools.math.Mathz;
+import tools.va.vad.DefinedVAD;
+import tools.va.util.ProbCalcInt;
 
 
 public class Ej13 {
@@ -10,11 +10,10 @@ public class Ej13 {
     private static int ERRORS=5;
     private static int CHOSEN=10;
     public static void main(String[] args) {
-        ProbCalc p = (x) -> {
+        ProbCalcInt p = (x) -> {
             return (Mathz.choose(TOTAL - ERRORS, CHOSEN - x)* Mathz.choose(ERRORS, x))/(double)Mathz.choose(TOTAL, CHOSEN) ;
         };
-        VADDef vad = new VADDef(0,5,p);
+        DefinedVAD vad = new DefinedVAD(0,5,p);
         System.out.println(vad);
-
     }
 }

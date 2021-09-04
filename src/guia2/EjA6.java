@@ -1,15 +1,19 @@
 package guia2;
 
-import tools.*;
+import tools.math.Mathz;
+import tools.va.VA;
+import tools.va.dependency.DepVAD;
+import tools.va.vad.DefinedVAD;
+import tools.va.util.ProbCalcInt;
 
 public class EjA6 {
     public static void main(String[] args) {
-        ProbCalc p = (n) -> {
+        ProbCalcInt p = (n) -> {
           return (Mathz.choose(10,n)*Mathz.choose(30,3-n))/(double)Mathz.choose(40,3);
         };
-        VADDef vad = new VADDef(0,3,p);
+        DefinedVAD vad = new DefinedVAD(0,3,p);
         System.out.println(vad);
-        VAD vadd = new VADD(vad, (v)->v*v-2.0);
+        VA vadd = new DepVAD(vad, (v)->v*v-2.0);
         System.out.println(vadd);
     }
 }

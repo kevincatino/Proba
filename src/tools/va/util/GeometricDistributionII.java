@@ -1,4 +1,4 @@
-package tools;
+package tools.va.util;
 
 import org.apache.commons.math3.distribution.GeometricDistribution;
 

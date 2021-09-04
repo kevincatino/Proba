@@ -1,11 +1,11 @@
-package tools;
+package tools.va;
 
 import org.apache.commons.math3.fraction.Fraction;
 
-public abstract class VAD {
-    abstract double ev();
-    abstract double var();
-    abstract double std();
+public abstract class VA {
+    public abstract double ev();
+    public abstract double var();
+    public abstract double std();
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append(String.format("E: %.4f  (%s)\n", ev(), new Fraction(ev())));

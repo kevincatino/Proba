@@ -1,4 +1,4 @@
-package tools;
+package tools.math;
 
 import org.apache.commons.math3.util.CombinatoricsUtils;
 
