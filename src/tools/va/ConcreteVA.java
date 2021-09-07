@@ -28,11 +28,5 @@ public abstract class ConcreteVA extends VA {
         return rightValue-leftValue;
     }
 
-    public double inverseProb(Set s, double value) {
-        return applyInverse(s, getInverseCumulFunction(), value);
-    }
 
-    protected abstract Function<Double,Double> getInverseCumulFunction();
-
-    protected abstract double applyInverse(Set s, Function<Double,Double> inverseCumul, double value);
 }

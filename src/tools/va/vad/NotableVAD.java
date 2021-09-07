@@ -4,11 +4,9 @@ import org.apache.commons.math3.distribution.*;
 import tools.va.util.GeometricDistributionII;
 import tools.va.util.VAFunctions;
 
-import java.util.function.Function;
-
-public class FamousVAD extends ConcreteVAD{
-    private AbstractIntegerDistribution d;
-    public FamousVAD(AbstractIntegerDistribution d) {
+public class NotableVAD extends VAD {
+    private final AbstractIntegerDistribution d;
+    public NotableVAD(AbstractIntegerDistribution d) {
         this.d=d;
     }
 
@@ -38,19 +36,19 @@ public class FamousVAD extends ConcreteVAD{
         return d.getSupportUpperBound();
     }
 
-    @Override
-    protected Function<Double, Double> getInverseCumulFunction() {
-        return (v)->(double)d.inverseCumulativeProbability(v);
+
+    public double inverseCumul(double prob) {
+        return d.inverseCumulativeProbability(prob);
     }
+
+
 
 
     public double rangeValue(int i) {
         return i;
     }
 
-    public double inverseCumulative(double p) {
-        return d.inverseCumulativeProbability(p);
-    }
+
 
 
 
@@ -117,4 +115,6 @@ public class FamousVAD extends ConcreteVAD{
 
         };
     }
+
+
 }

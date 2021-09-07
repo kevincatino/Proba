@@ -8,7 +8,7 @@ import tools.va.util.ValuePair;
 import java.util.Iterator;
 import java.util.function.Function;
 
-public abstract class ConcreteVAD extends ConcreteVA {
+public abstract class VAD extends ConcreteVA {
     protected abstract double rangeValue(int i);
     public Iterator<ValuePair> getProbIterator() {
         return new Iterator<>(){
@@ -38,22 +38,15 @@ public abstract class ConcreteVAD extends ConcreteVA {
         };
     }
 
-    protected double applyInverse(Set s, Function<Double,Double> inverseCumul, double value) {
-        double toReturn=0;
-        switch (s) {
-            case GEQ -> toReturn = inverseCumul.apply(1 - value);
-            case LEQ -> toReturn = inverseCumul.apply(value); //OK
-            case GRE -> toReturn = inverseCumul.apply(1 - value); //OK
-            case LES-> {
-                double leq = inverseCumul.apply(value);
-                while(inverseCumul.apply(value)==leq)
-                    value--;
-                toReturn = inverseCumul.apply(value);
-            }
-            case EQ -> throw new IllegalArgumentException("No se puede usar EQ en probabilidad inversa");
-        }
-        return toReturn;
-    }
+    /***
+     *
+     * @param proba
+     * @return el primer valor del rango para el cual se acumula una probabilidad igual o mayor a proba
+     */
+    public abstract double inverseCumul(double proba);
+
+
+
 
 
 

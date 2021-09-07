@@ -3,20 +3,19 @@ package tools.va.vad;
 import org.apache.commons.math3.fraction.Fraction;
 import tools.va.util.ProbCalcDouble;
 import tools.va.util.ProbCalcInt;
-import tools.va.util.Set;
 import tools.va.util.VAFunctions;
 
 import java.util.Arrays;
-import java.util.function.Function;
 import java.util.stream.IntStream;
 
-public class DefinedVAD extends ConcreteVAD {
+public class DefinedVAD extends VAD {
     protected double ev;
     protected double var;
     protected double std;
     private final double[] range;
     private final double[] prob;
 
+    //Las probabilidades deben ser no nulas en todos los valores del rango
     public DefinedVAD(double[] range, double[] prob) {
         this.range=range;
         this.prob=prob;
@@ -105,18 +104,19 @@ public class DefinedVAD extends ConcreteVAD {
         return range.length-1;
     }
 
-    @Override
-    protected Function<Double, Double> getInverseCumulFunction() {
-        return (v)-> {
-            double accum=0;
-            for (int i=0 ; i<range.length ; i++) {
-                accum+=prob(Set.EQ,prob[i]);
-                if (accum>=v)
-                    return range[i];
-            }
-            throw new RuntimeException("Ninguno de los valores del rango acumula la probabilidad deseada");
-        };
+
+    public double inverseCumul(double proba) {
+        double accum=0;
+        for (int i=0 ; i<range.length; i++) {
+            accum+=prob[i];
+            if (accum>=proba)
+                return range[i];
+        }
+        throw new RuntimeException("Ninguno de los valores del rango acumula la probabilidad deseada");
     }
+
+
+
 
     @Override
     public double rangeValue(int i) {
@@ -124,6 +124,7 @@ public class DefinedVAD extends ConcreteVAD {
             throw new RuntimeException("Invalid value");
         return range[i];
     }
+
 
     @Override
     protected VAFunctions generateVADValues() {

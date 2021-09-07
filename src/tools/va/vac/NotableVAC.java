@@ -1,13 +1,15 @@
 package tools.va.vac;
 
 import org.apache.commons.math3.distribution.*;
+import tools.va.util.Set;
 import tools.va.util.VAFunctions;
+import tools.va.vad.NotableVAD;
 
 import java.util.function.Function;
 
-public class FamousVAC extends ConcreteVAC {
+public class NotableVAC extends VAC {
     private final AbstractRealDistribution d;
-    public FamousVAC(AbstractRealDistribution d) {
+    public NotableVAC(AbstractRealDistribution d) {
         this.d=d;
     }
     @Override
@@ -32,12 +34,12 @@ public class FamousVAC extends ConcreteVAC {
 
             @Override
             public double probability(double x) {
-                return d.probability((int)x);
+                return d.probability(x);
             }
 
             @Override
             public double cumulativeProbability(double x) {
-                return d.cumulativeProbability((int)x);
+                return d.cumulativeProbability(x);
             }
 
         };
@@ -56,6 +58,14 @@ public class FamousVAC extends ConcreteVAC {
         return new WeibullDistribution(k,1/lambda);
     }
 
+    public static AbstractRealDistribution normal(double mu, double sd){
+        new NormalDistribution();
+        return new NormalDistribution(mu,sd);
+    }
+    public static AbstractRealDistribution normal(){
+        return new NormalDistribution();
+    }
+
     public double median() {
         return d.inverseCumulativeProbability(0.5);
     }
@@ -70,5 +80,13 @@ public class FamousVAC extends ConcreteVAC {
     @Override
     protected Function<Double, Double> getInverseCumulFunction() {
         return d::inverseCumulativeProbability;
+    }
+
+    public static double normalQuantil(double p) {
+        return new NotableVAC(NotableVAC.normal()).quantil(p);
+    }
+
+    public static double normalCumul(double p) {
+        return new NotableVAC(NotableVAC.normal()).prob(Set.LEQ,p);
     }
 }

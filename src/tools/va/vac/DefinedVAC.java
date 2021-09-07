@@ -7,12 +7,13 @@ import tools.va.util.VAFunctions;
 
 import java.util.function.Function;
 
-public class DefinedVAC extends ConcreteVAC {
+public class DefinedVAC extends VAC {
     private Double a,b;
     private UnivariateFunction f;
     private final static double LAMBDA=0.00001;
     private final static int MAX_EVAL=Integer.MAX_VALUE;
     private final static double INFINITE=Double.MAX_VALUE;
+
 
     public DefinedVAC(Double a, Double b, UnivariateFunction f) {
         if (a==null)
@@ -106,4 +107,6 @@ public class DefinedVAC extends ConcreteVAC {
             return med;
         };
     }
+
+
 }
