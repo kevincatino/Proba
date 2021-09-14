@@ -108,5 +108,20 @@ public class DefinedVAC extends VAC {
         };
     }
 
+    @Override
+    public double density(double value) {
+        return f.value(value);
+    }
+
+    @Override
+    public double lowRangeValue() {
+        return a;
+    }
+
+    @Override
+    public double highRangeValue() {
+        return b;
+    }
+
 
 }

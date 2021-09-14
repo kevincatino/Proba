@@ -28,5 +28,4 @@ public abstract class ConcreteVA extends VA {
         return rightValue-leftValue;
     }
 
-
 }

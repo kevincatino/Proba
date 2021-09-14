@@ -40,6 +40,12 @@ public abstract class VAC extends ConcreteVA {
         return inverseCumul(proba);
     }
 
+    public abstract double density(double value);
+
+    public abstract double lowRangeValue();
+
+    public abstract double highRangeValue();
+
 
 
 

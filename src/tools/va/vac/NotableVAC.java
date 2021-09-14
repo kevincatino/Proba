@@ -82,11 +82,30 @@ public class NotableVAC extends VAC {
         return d::inverseCumulativeProbability;
     }
 
+    @Override
+    public double density(double value) {
+        return d.density(value);
+    }
+
+    @Override
+    public double lowRangeValue() {
+        return d.getSupportLowerBound();
+    }
+
+    @Override
+    public double highRangeValue() {
+        return d.getSupportUpperBound();
+    }
+
     public static double normalQuantil(double p) {
         return new NotableVAC(NotableVAC.normal()).quantil(p);
     }
 
     public static double normalCumul(double p) {
         return new NotableVAC(NotableVAC.normal()).prob(Set.LEQ,p);
+    }
+
+    public static double Phi(double p) {
+        return normalCumul(p);
     }
 }
