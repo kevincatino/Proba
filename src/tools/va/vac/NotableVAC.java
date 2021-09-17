@@ -7,7 +7,7 @@ import tools.va.vad.NotableVAD;
 
 import java.util.function.Function;
 
-public class NotableVAC extends VAC {
+public class NotableVAC extends ConcreteVAC{
     private final AbstractRealDistribution d;
     public NotableVAC(AbstractRealDistribution d) {
         this.d=d;
@@ -46,24 +46,23 @@ public class NotableVAC extends VAC {
     }
 
 
-    public static AbstractRealDistribution exponential(double lambda){
-        return new ExponentialDistribution(1/lambda);
+    public static NotableVAC exponential(double lambda){
+        return new NotableVAC(new ExponentialDistribution(1/lambda));
     }
 
-    public static AbstractRealDistribution uniform(double a, double b){
-        return new UniformRealDistribution(a,b);
+    public static NotableVAC uniform(double a, double b){
+        return new NotableVAC(new UniformRealDistribution(a,b));
     }
 
-    public static AbstractRealDistribution weibull(double lambda, double k){
-        return new WeibullDistribution(k,1/lambda);
+    public static NotableVAC weibull(double lambda, double k){
+        return new NotableVAC(new WeibullDistribution(k,1/lambda));
     }
 
-    public static AbstractRealDistribution normal(double mu, double sd){
-        new NormalDistribution();
-        return new NormalDistribution(mu,sd);
+    public static NotableVAC normal(double mu, double sd){
+        return new NotableVAC(new NormalDistribution(mu,sd));
     }
-    public static AbstractRealDistribution normal(){
-        return new NormalDistribution();
+    public static NotableVAC normal(){
+        return new NotableVAC(new NormalDistribution());
     }
 
     public double median() {
@@ -78,7 +77,7 @@ public class NotableVAC extends VAC {
 
 
     @Override
-    protected Function<Double, Double> getInverseCumulFunction() {
+    public Function<Double, Double> getInverseCumulFunction() {
         return d::inverseCumulativeProbability;
     }
 
@@ -98,11 +97,11 @@ public class NotableVAC extends VAC {
     }
 
     public static double normalQuantil(double p) {
-        return new NotableVAC(NotableVAC.normal()).quantil(p);
+        return NotableVAC.normal().quantil(p);
     }
 
     public static double normalCumul(double p) {
-        return new NotableVAC(NotableVAC.normal()).prob(Set.LEQ,p);
+        return NotableVAC.normal().prob(Set.LEQ,p);
     }
 
     public static double Phi(double p) {

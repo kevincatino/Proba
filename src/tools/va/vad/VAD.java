@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.function.Function;
 
 public abstract class VAD extends ConcreteVA {
-    protected abstract double rangeValue(int i);
+    public abstract double rangeValue(int i);
     public Iterator<ValuePair> getProbIterator() {
         return new Iterator<>(){
             private int cursor=lowerBound();
@@ -26,8 +26,8 @@ public abstract class VAD extends ConcreteVA {
             }
         };
     }
-    protected abstract int lowerBound();
-    protected abstract int upperBound();
+    public abstract int lowerBound();
+    public abstract int upperBound();
     protected double apply(Set s, VAFunctions d, double value) {
         return switch (s) {
             case EQ -> d.probability(value);

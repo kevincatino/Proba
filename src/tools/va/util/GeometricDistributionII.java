@@ -15,4 +15,7 @@ public class GeometricDistributionII extends GeometricDistribution {
     public double probability(int x) {
         return super.probability(x-1);
     }
+    public double getNumericalMean() {
+        return super.getNumericalMean()+1;
+    }
 }

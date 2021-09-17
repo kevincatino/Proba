@@ -27,12 +27,12 @@ public class NotableVAD extends VAD {
 
 
 
-    protected int lowerBound() {
+    public int lowerBound() {
         return d.getSupportLowerBound();
     }
 
 
-    protected int upperBound() {
+    public int upperBound() {
         return d.getSupportUpperBound();
     }
 
@@ -58,8 +58,8 @@ public class NotableVAD extends VAD {
      * @param p probabilidad de éxito
      * @return instancia de VAD con distr. binomial para el constructor de VADF
      */
-    public static AbstractIntegerDistribution binomial(int n, double p){
-        return new BinomialDistribution(n,p);
+    public static NotableVAD binomial(int n, double p){
+        return new NotableVAD(new BinomialDistribution(n,p));
     }
 
     /***
@@ -67,8 +67,8 @@ public class NotableVAD extends VAD {
      * @param e valor esperado (lambda)
      * @return instancia de VAD con distr. de Poisson para el constructor de VADF
      */
-    public static AbstractIntegerDistribution poisson(double e){
-        return new PoissonDistribution(e);
+    public static NotableVAD poisson(double e){
+        return new NotableVAD(new PoissonDistribution(e));
     }
 
     /***
@@ -78,8 +78,8 @@ public class NotableVAD extends VAD {
      * @param n cantidad de elementos de la muestra
      * @return instancia de VAD con distr. hipergeométrica para el constructor de VADF
      */
-    public static AbstractIntegerDistribution hipergeo(int N, int m, int n){
-        return new HypergeometricDistribution(N,m,n);
+    public static NotableVAD hipergeo(int N, int m, int n){
+        return new NotableVAD(new HypergeometricDistribution(N,m,n));
     }
 
     /***
@@ -87,16 +87,16 @@ public class NotableVAD extends VAD {
      * @param p probabilidad de éxito
      * @return instancia de VAD con distr. geométricaI para el constructor de VADF. La variable aleatoria es el número de fallos antes del primer éxito.
      */
-    public static AbstractIntegerDistribution geo(double p){
-        return new GeometricDistribution(p);
+    public static NotableVAD geo(double p){
+        return new NotableVAD(new GeometricDistribution(p));
     }
     /***
      *
      * @param p probabilidad de éxito
      * @return instancia de VAD con distr. geométricaII para el constructor de VADF. La variable aleatoria es el intento en el cual ocurre el primer éxito.
      */
-    public static AbstractIntegerDistribution geoII(double p){
-        return new GeometricDistributionII(p);
+    public static NotableVAD geoII(double p){
+        return new NotableVAD(new GeometricDistributionII(p));
     }
 
     @Override

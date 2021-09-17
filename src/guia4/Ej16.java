@@ -5,7 +5,7 @@ import tools.va.util.Set;
 
 public class Ej16 {
     public static void main(String[] args) {
-        NotableVAC vad = new NotableVAC(NotableVAC.weibull(0.01,2));
+        NotableVAC vad =NotableVAC.weibull(0.01,2);
         System.out.println(vad.prob(Set.GEQ,20)/vad.prob(Set.GEQ,10));
     }
 }

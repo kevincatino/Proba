@@ -5,40 +5,92 @@ import org.apache.commons.math3.analysis.integration.RombergIntegrator;
 import tools.va.util.Set;
 import tools.va.util.VAFunctions;
 
+import java.util.Arrays;
+import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.DoubleStream;
 
-public class DefinedVAC extends VAC {
+public class DefinedVAC extends ConcreteVAC{
     private Double a,b;
-    private UnivariateFunction f;
-    private final static double LAMBDA=0.00001;
+    private Double[] intervals;
+    private UnivariateFunction[] fs;
     private final static int MAX_EVAL=Integer.MAX_VALUE;
     private final static double INFINITE=Double.MAX_VALUE;
 
-
+    /***
+     *
+     * @param a limite izquierdo. Si es null se considera +inf
+     * @param b limite derecho. Si es null se considera -inf
+     * @param f funcion de densidad de probabilidad
+     */
     public DefinedVAC(Double a, Double b, UnivariateFunction f) {
-        if (a==null)
-            this.a=-INFINITE;
-        else
-            this.a=a;
-        if (b==null)
-            this.b=INFINITE;
-        else
-            this.b=b;
-
-        this.f=f;
+        this(new Double[]{a,b}, new UnivariateFunction[]{f});
     }
 
-    public DefinedVAC(Integer a, Integer b, UnivariateFunction f) {
-        if (a==null)
-            this.a=-INFINITE;
-        else
-            this.a=(double)a;
-        if (b==null)
-            this.b=INFINITE;
-        else
-            this.b=(double)b;
 
-        this.f=f;
+    public DefinedVAC(Double[] intervals, UnivariateFunction[] fs) {
+        if (intervals.length != fs.length+1)
+            throw new RuntimeException("la cantidad de intervalos y funciones no coincide.");
+
+        if (intervals[0]==null)
+            intervals[0]=-INFINITE;
+
+        if (intervals[intervals.length-1]==null)
+            intervals[intervals.length-1]=INFINITE;
+        a = intervals[0];
+        b = intervals[intervals.length-1];
+        this.intervals=intervals;
+        this.fs=fs;
+    }
+
+    public DefinedVAC(Integer[] intervals, UnivariateFunction[] fs) {
+        this.intervals = new Double[intervals.length];
+        for (int i=0 ; i<intervals.length ; i++)
+            if (intervals[i]==null)
+                this.intervals[i]=null;
+            else
+                this.intervals[i]= (double) intervals[i];
+
+        if (intervals.length != fs.length+1)
+            throw new RuntimeException("la cantidad de intervalos y funciones no coincide.");
+
+        if (intervals[0]==null)
+            this.intervals[0]=-INFINITE;
+
+        if (intervals[intervals.length-1]==null)
+            this.intervals[intervals.length-1]=INFINITE;
+        a = this.intervals[0];
+        b = this.intervals[intervals.length-1];
+        this.fs=fs;
+    }
+
+    /***
+     *
+     * @param a limite izquierdo. Si es null se considera +inf
+     * @param b limite derecho. Si es null se considera -inf
+     * @param f funcion de densidad de probabilidad
+     */
+    public DefinedVAC(Integer a, Integer b, UnivariateFunction f) {
+        this(new Integer[]{a,b}, new UnivariateFunction[]{f});
+    }
+
+    private double integrate(BiFunction<UnivariateFunction,Double,Double> f, Double[] intervals) {
+        double accum=0;
+        for (int i=0 ; i<fs.length ; i++) {
+            UnivariateFunction func = fs[i];
+            accum+=integrate((v)->f.apply(func,v),intervals[i],intervals[i+1]);
+        }
+        return accum;
+    }
+
+    private Double[] getIntervals(double x) {
+        int i;
+        for (i=0 ; i<intervals.length && intervals[i]<=x ; i++);
+        Double[] toReturn = new Double[i+1];
+        for (int j=0 ; j<i ; j++)
+            toReturn[j]=intervals[j];
+        toReturn[i] = x;
+        return toReturn;
     }
 
     @Override
@@ -55,19 +107,20 @@ public class DefinedVAC extends VAC {
                     return 0;
                 else if(x>=b)
                     return 1;
-                return new RombergIntegrator().integrate(MAX_EVAL,f,a,x);
+                Double[] intervals = getIntervals(x);
+                return integrate(UnivariateFunction::value,intervals);
             }
         };
     }
 
     @Override
     public double ev() {
-        return new RombergIntegrator().integrate(MAX_EVAL,(v)->v*f.value(v),a,b);
+        return integrate((f,v)->v*f.value(v), intervals);
     }
 
     @Override
     public double var() {
-        return new RombergIntegrator().integrate(MAX_EVAL,(v)->v*v*f.value(v),a,b)-Math.pow(ev(),2);
+        return integrate((f,v)->v*v*f.value(v), intervals)-Math.pow(ev(),2);
     }
 
     @Override
@@ -76,7 +129,7 @@ public class DefinedVAC extends VAC {
     }
 
     @Override
-    protected Function<Double, Double> getInverseCumulFunction() {
+    public Function<Double, Double> getInverseCumulFunction() {
         return (v)-> {
             double lower=a,higher=b,delta=10000;
             if (a==-INFINITE) {
@@ -110,7 +163,15 @@ public class DefinedVAC extends VAC {
 
     @Override
     public double density(double value) {
-        return f.value(value);
+            if (value < a)
+                return 0;
+            else if(value > b)
+                return 0;
+            for (int i=0 ; i<fs.length ; i++) {
+                if (value>=intervals[i])
+                    return fs[i].value(value);
+            }
+            throw new RuntimeException();
     }
 
     @Override

@@ -17,6 +17,8 @@ public class DefinedVAD extends VAD {
 
     //Las probabilidades deben ser no nulas en todos los valores del rango
     public DefinedVAD(double[] range, double[] prob) {
+        if (range.length != prob.length)
+            throw new RuntimeException("La cantidad de rangos y valores de probabilidad deben ser iguales");
         this.range=range;
         this.prob=prob;
         setVariables();

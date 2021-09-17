@@ -14,10 +14,29 @@ public abstract class ConcreteVA extends VA {
         return apply(s, generateVADValues(), value);
     }
 
+    /***
+     *
+     * @param value
+     * @return la probabilidad de que la variable tome un valor igual a value
+     */
+    public double prob(double value) {
+        return prob(Set.EQ, value);
+    }
+
+    /***
+     *
+     * @param value
+     * @return la probabilidad acumulada por izquierda menor o igual que value
+     */
     public double F(double value) {
         return prob(Set.LEQ, value);
     }
 
+    /***
+     *
+     * @param value
+     * @return la probabilidad acumulada por derecha mayor o igual que value
+     */
     public double G(double value) {
         return prob(Set.GEQ,value);
     }

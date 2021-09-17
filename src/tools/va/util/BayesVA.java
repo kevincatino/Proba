@@ -25,8 +25,32 @@ public class BayesVA {
 
     public double condProb(ConcreteVA va, Set s, double value) {
         for (int i=0 ; i<vas.length ; i++)
-            if (vas[i]==va)
-                return va.prob(s,value)*prob[i]/prob(s,value);
+            if (vas[i]==va) {
+                return (va.prob(s,value)*prob[i])/prob(s,value);
+            }
+
             return 0.0;
+    }
+
+    public double ev() {
+        double accum=0;
+        for (int i=0 ; i<vas.length ; i++) {
+            accum+=prob[i]*vas[i].ev();
+        }
+        return accum;
+    }
+
+    public double var() {
+        double accum=0;
+        for (int i=0 ; i<vas.length ; i++) {
+            double var=vas[i].var();
+            accum += (var + Math.pow(vas[i].ev(),2))*prob[i];
+
+        }
+        return accum-Math.pow(ev(),2);
+    }
+
+    public double std() {
+        return Math.sqrt(var());
     }
 }

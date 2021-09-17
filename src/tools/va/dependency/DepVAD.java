@@ -7,16 +7,17 @@ import tools.va.vad.DefinedVAD;
 import tools.va.VA;
 import tools.va.util.Set;
 import tools.va.util.ValuePair;
+import tools.va.vad.VAD;
 
 
 import java.util.Iterator;
 
 
 public class DepVAD extends DepVA {
-    private final DefinedVAD vad;
+    private final VAD vad;
     private final Dependency f;
 
-    public DepVAD(DefinedVAD vad, Dependency f) {
+    public DepVAD(VAD vad, Dependency f) {
         this.vad = vad;
         this.f = f;
     }
